@@ -1,0 +1,18 @@
+{% extends "base.htm" %}
+
+{% block title %}Yard Sale Administration{% endblock %}
+{% block heading %}Yard Sale Administration{% endblock %}
+
+{% block content %}
+<p>
+<ul>
+{% for item in items %}
+  <li><a href="/edit/{{ item.key }}">{{ item.name }} for ${{ item.price_dollars|floatformat:2 }}</a></li>
+{% endfor %}
+</ul>
+</p>
+<p>
+<a href="/add/">New item</a>
+</p>
+{% endblock %}
+

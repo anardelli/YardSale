@@ -1,0 +1,21 @@
+{% extends "base.htm" %}
+
+{% block title %}Edit item{% endblock %}
+{% block heading %}Edit item{% endblock %}
+
+{% block content %}
+<p>
+<form action="/edit/{{ item.key }}" method="post">
+name: <input type="text" name="name" value="{{ item.name }}"/><br/>
+description: <input type="text" name="description" value="{{ item.description }}"/><br/>
+seller: <input type="text" name="seller" value="{{ item.seller }}"/><br/>
+price: <input type="text" name="price" value="{{ item.price_dollars|floatformat:2 }}"/><br/>
+available: <input type="text" name="available" value="{{ item.available }}"/><br/>
+<input type="submit" value="Update"/>
+</form>
+</p>
+<p>
+<img src="{{ item.qr_code }}"/>
+</p>
+{% endblock %}
+

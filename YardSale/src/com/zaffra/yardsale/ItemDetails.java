@@ -43,9 +43,13 @@ public class ItemDetails extends Activity implements OnClickListener{
 	// ENV_NONE runs in demo mode. Go to http://developer.paypal.com to get
 	// api credentials for a Sandbox account. Get real credentials at http://paypal.com
 	private static final int server = PayPal.ENV_NONE;
+	//private static final int server = PayPal.ENV_SANDBOX;
 	
 	// The ID of your application that you received from PayPal. The Sandbox appID is below
 	private static final String appID = "APP-80W284485P519543T";
+	
+	private static final String INVENTORY_SERVER = "http://YOUR_SERVER.appspot.com/get/";
+	private static final String IPN_SERVER = "http://YOUR_SERVER.appspot.com/ipn/";
 	
 	private static final int INITIALIZE_SUCCESS = 0;
 	private static final int INITIALIZE_FAILURE = 1;
@@ -141,7 +145,6 @@ public class ItemDetails extends Activity implements OnClickListener{
 			// This is the main initialization call that takes in your Context, the Application ID, 
 			// and the server you would like to connect to.
 			pp = PayPal.initWithAppID(this, appID, server);
-   			
 			// Required settings.
         	pp.setLanguage("en_US"); // Sets the language for the library.
         	
@@ -169,7 +172,8 @@ public class ItemDetails extends Activity implements OnClickListener{
 	}
 	
 	/* Helper for fetching yard sale items from the server */
-    private Item getYardSaleItem(String uri){
+    private Item getYardSaleItem(String suffix){
+    	String uri = INVENTORY_SERVER + suffix;
         DefaultHttpClient httpClient = new DefaultHttpClient();
         InputStream data = null;
         try {
@@ -258,7 +262,7 @@ public class ItemDetails extends Activity implements OnClickListener{
         
         // Sets the Instant Payment Notification url. This url will be hit by the PayPal server upon completion of the payment.
         // See https://www.paypal.com/ipn for more details about the wonders of IPNs.
-        payment.setIpnUrl("http://www.example.com/ipn");
+        payment.setIpnUrl(IPN_SERVER + item.getId() );
         
         // Sets the memo. This memo will be part of the notification sent by PayPal to the necessary parties.
         payment.setMemo("Thanks for purchasing.");
